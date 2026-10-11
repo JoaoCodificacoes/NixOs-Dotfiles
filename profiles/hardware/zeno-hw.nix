@@ -21,7 +21,7 @@
     fileSystems."/mnt/pai" = {
       device = "/dev/disk/by-uuid/A024-387C";
       fsType = "exfat";
-      options = [ "uid=nextcloud" "gid=nextcloud" "dmask=027" "fmask=137" ];
+      options = [ "uid=nextcloud" "gid=nextcloud" "dmask=007" "fmask=117" ];
     };
 
   swapDevices =
