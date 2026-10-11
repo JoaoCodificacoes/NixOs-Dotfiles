@@ -24,6 +24,7 @@
       ../../profiles/couchdb.nix
       ../../profiles/hora.nix
       ../../profiles/back2you.nix
+      ../../profiles/immich.nix
       #../../profiles/matrix.nix
     ];
 
