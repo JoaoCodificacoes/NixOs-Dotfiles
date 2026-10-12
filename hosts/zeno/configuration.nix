@@ -25,6 +25,7 @@
       ../../profiles/hora.nix
       ../../profiles/back2you.nix
       ../../profiles/immich.nix
+      ../../profiles/wireguard.nix
       #../../profiles/matrix.nix
     ];
 
