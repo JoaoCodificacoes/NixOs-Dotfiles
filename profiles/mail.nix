@@ -27,7 +27,7 @@ in
     # AdGuard already owns port 53.
     localDnsResolver = false;
 
-    accounts."simao@sslavos.com" = {
+    accounts."me@sslavos.com" = {
       hashedPasswordFile = config.age.secrets.mail-password-hash.path;
       aliases = [ "postmaster@sslavos.com" ];
     };
@@ -51,6 +51,7 @@ in
       $config['smtp_host'] = "ssl://${fqdn}";
       $config['smtp_user'] = "%u";
       $config['smtp_pass'] = "%p";
+      $config['username_domain'] = "sslavos.com";
     '';
   };
 

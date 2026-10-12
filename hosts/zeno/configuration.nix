@@ -28,7 +28,7 @@
       ../../profiles/wireguard.nix
       ../../profiles/ddns.nix
       #../../profiles/matrix.nix
-      #../../profiles/mail.nix
+      ../../profiles/mail.nix
     ];
 
   boot.loader.grub.enable = true;
