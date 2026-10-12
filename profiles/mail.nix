@@ -40,7 +40,7 @@ in
     smtp_sasl_auth_enable = true;
     smtp_sasl_password_maps = "texthash:${config.age.secrets.mail-relay-sasl.path}";
     smtp_sasl_security_options = "noanonymous";
-    # Brevo also offers CRAM-MD5, which postfix would pick and Brevo rejects.
+    # Brevo also offers CRAM-MD5, which postfix would otherwise prefer.
     smtp_sasl_mechanism_filter = "plain, login";
     smtp_tls_security_level = lib.mkForce "encrypt";
   };
