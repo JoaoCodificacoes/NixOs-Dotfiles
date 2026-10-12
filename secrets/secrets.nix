@@ -15,4 +15,6 @@ in {
     "kavita-token.age".publicKeys = [ zeno rnl-simaolavos ];
     "back2you-htpasswd.age".publicKeys = [ zeno rnl-simaolavos ];
     "cloudflare-ddns-token.age".publicKeys = [ zeno rnl-simaolavos ];
+    "mail-password-hash.age".publicKeys = [ zeno rnl-simaolavos ];
+    "mail-relay-sasl.age".publicKeys = [ zeno rnl-simaolavos ];
   }
