@@ -1,6 +1,7 @@
 { config, inputs, lib, ... }:
 let
   fqdn = "mail.sslavos.com";
+  webmail = "webmail.sslavos.com";
   relay = "[smtp-relay.brevo.com]:587";
 in
 {
@@ -21,7 +22,7 @@ in
     inherit fqdn;
     domains = [ "sslavos.com" ];
 
-    # Certificate issued through the nginx vhost roundcube creates below.
+    # Certificate issued through the nginx vhost below.
     x509.useACMEHost = fqdn;
 
     # AdGuard already owns port 53.
@@ -45,7 +46,7 @@ in
   # Served directly from the home IP (DNS-only A record), like photos.
   services.roundcube = {
     enable = true;
-    hostName = fqdn;
+    hostName = webmail;
     extraConfig = ''
       $config['imap_host'] = "ssl://${fqdn}";
       $config['smtp_host'] = "ssl://${fqdn}";
@@ -58,7 +59,14 @@ in
   # Roundcube reaches the mail server locally instead of via the router.
   networking.hosts."127.0.0.1" = [ fqdn ];
 
-  services.cloudflare-dyndns.domains = [ fqdn ];
+  # Only here to issue the mail server certificate.
+  services.nginx.virtualHosts.${fqdn} = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/".return = "301 https://${webmail}$request_uri";
+  };
+
+  services.cloudflare-dyndns.domains = [ fqdn webmail ];
 
   security.acme.acceptTerms = true;
 
