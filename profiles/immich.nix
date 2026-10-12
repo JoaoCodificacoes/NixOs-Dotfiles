@@ -15,7 +15,11 @@
   ];
   systemd.services.immich-server.unitConfig.RequiresMountsFor = "/mnt/pai";
 
+  # Served directly from the home IP (DNS-only A record), not through the
+  # Cloudflare tunnel, so uploads are not capped at 100 MB.
   services.nginx.virtualHosts."photos.sslavos.com" = {
+    enableACME = true;
+    forceSSL = true;
     locations."/" = {
       proxyPass = "http://127.0.0.1:2283/";
       proxyWebsockets = true;
@@ -29,7 +33,7 @@
     };
   };
 
-  services.cloudflared.tunnels."113fd93b-5514-4d9e-86d2-7eb0c6d7ea9e".ingress."photos.sslavos.com" = {
-    service = "http://localhost:80";
-  };
+  security.acme.acceptTerms = true;
+
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 }

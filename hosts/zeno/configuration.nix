@@ -26,6 +26,7 @@
       ../../profiles/back2you.nix
       ../../profiles/immich.nix
       ../../profiles/wireguard.nix
+      ../../profiles/ddns.nix
       #../../profiles/matrix.nix
     ];
 
