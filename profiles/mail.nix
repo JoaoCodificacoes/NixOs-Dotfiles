@@ -1,9 +1,8 @@
 { config, inputs, lib, ... }:
 let
-  # Not mail.sslavos.com: Brevo needs that name for its own CNAME.
   fqdn = "mx.sslavos.com";
   webmail = "webmail.sslavos.com";
-  relay = "[smtp-relay.brevo.com]:587";
+  relay = "[mail.smtp2go.com]:587";
 in
 {
   imports = [ inputs.simple-nixos-mailserver.nixosModules.default ];
@@ -11,7 +10,7 @@ in
   # Output of `nix-shell -p mkpasswd --run 'mkpasswd -s'`.
   age.secrets.mail-password-hash.file = ../secrets/mail-password-hash.age;
 
-  # One line: [smtp-relay.brevo.com]:587 <smtp user>:<smtp password>
+  # One line: [mail.smtp2go.com]:587 <smtp user>:<smtp password>
   age.secrets.mail-relay-sasl = {
     file = ../secrets/mail-relay-sasl.age;
     owner = config.services.postfix.user;
@@ -35,13 +34,13 @@ in
     };
   };
 
-  # The home IP is residential, so outgoing mail goes through Brevo.
+  # The home IP is residential, so outgoing mail goes through SMTP2GO.
   services.postfix.settings.main = {
     relayhost = [ relay ];
     smtp_sasl_auth_enable = true;
     smtp_sasl_password_maps = "texthash:${config.age.secrets.mail-relay-sasl.path}";
     smtp_sasl_security_options = "noanonymous";
-    # Brevo also offers CRAM-MD5, which postfix would otherwise prefer.
+    # Keeps postfix from picking CRAM-MD5 when a relay offers it.
     smtp_sasl_mechanism_filter = "plain, login";
     smtp_tls_security_level = lib.mkForce "encrypt";
   };
