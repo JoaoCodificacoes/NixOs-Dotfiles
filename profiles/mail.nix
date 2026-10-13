@@ -1,6 +1,7 @@
 { config, inputs, lib, ... }:
 let
-  fqdn = "mail.sslavos.com";
+  # Not mail.sslavos.com: Brevo needs that name for its own CNAME.
+  fqdn = "mx.sslavos.com";
   webmail = "webmail.sslavos.com";
   relay = "[smtp-relay.brevo.com]:587";
 in
