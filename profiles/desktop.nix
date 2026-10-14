@@ -44,12 +44,11 @@
     alacritty
     tealdeer
     dropbox
-    zed-editor
     docker
     virt-manager
     cargo
     steam
-    codex
     claude-code
+    vscode
   ];
 }
