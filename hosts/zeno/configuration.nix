@@ -24,6 +24,7 @@
       ../../profiles/couchdb.nix
       ../../profiles/hora.nix
       ../../profiles/back2you.nix
+      ../../profiles/tutoring-app.nix
       ../../profiles/immich.nix
       ../../profiles/wireguard.nix
       ../../profiles/ddns.nix

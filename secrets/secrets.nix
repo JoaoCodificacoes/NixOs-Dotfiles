@@ -17,4 +17,5 @@ in {
     "cloudflare-ddns-token.age".publicKeys = [ zeno rnl-simaolavos ];
     "mail-password-hash.age".publicKeys = [ zeno rnl-simaolavos ];
     "mail-relay-sasl.age".publicKeys = [ zeno rnl-simaolavos ];
+    "tutoring-app-env.age".publicKeys = [ zeno ];
   }
