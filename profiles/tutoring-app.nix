@@ -39,4 +39,32 @@ in
       ExecStop = "${compose} down";
     };
   };
+
+  # Picks up new GHCR images. Not Watchtower: it recreates containers one at
+  # a time and ignores depends_on, so a new api would start before migrate.
+  # Not a restart of tutoring-app either: its ExecStop takes the stack down.
+  # up -d only recreates containers whose image changed.
+  systemd.services.tutoring-app-update = {
+    description = "Pull and redeploy tutoring app images";
+    # requisite: skip (don't start the stack) if it was stopped on purpose
+    requisite = [ "tutoring-app.service" ];
+    after = [ "tutoring-app.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      WorkingDirectory = dir;
+    };
+    # --profile ops also refreshes the backup image used by `run --rm backup`
+    script = ''
+      ${compose} --profile ops pull
+      ${compose} up -d --remove-orphans
+    '';
+  };
+
+  systemd.timers.tutoring-app-update = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*:0/15";
+      RandomizedDelaySec = "60";
+    };
+  };
 }
